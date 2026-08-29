@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kit Papelaria Cristã Digital — Imprime e Vende</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet" />
+  
+  <style>
+    :root {
+      --bg: #fdfbf7;
+      --fg: #2d2d2d;
+      --muted: #e5e0d8;
+      --accent: #E91E8C; /* Bright Pink */
+      --border: #2d2d2d;
+      --blue: #2d5da1;
+      --yellow: #FFF3B0;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--muted) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--fg);
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Kalam', cursive;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    p { margin-bottom: 1rem; color: var(--fg); opacity: 0.9; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    section { padding: 80px 0; }
+
+    /* Wobbly Shapes */
+    .wobbly { border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+
+    /* Scrapbook Buttons */
+    .btn {
+      display: inline-block;
+      padding: 16px 36px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      border: 3px solid var(--border);
+      background: var(--white);
+      color: var(--fg);
+      box-shadow: 5px 5px 0px 0px var(--border);
+      border-radius: 4px; /* Slightly rounded, mostly sharp */
+      transition: all 0.1s ease;
+    }
+    .btn:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 3px 3px 0px 0px var(--border);
+    }
+    .btn:active {
+      transform: translate(5px, 5px);
+      box-shadow: 0px 0px 0px 0px var(--border);
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .btn-block { display: block; width: 100%; }
+
+    /* Tags */
+    .tag {
+      display: inline-block;
+      background: var(--yellow);
+      border: 2px dashed var(--border);
+      padding: 6px 18px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1rem;
+      font-weight: 700;
+      transform: rotate(-1.5deg);
+      margin-bottom: 24px;
+      border-radius: 120px 8px 100px 8px / 8px 100px 8px 120px;
+    }
+
+    /* Urgency Bar */
+    .urgency-bar {
+      background: var(--accent);
+      color: white;
+      text-align: center;
+      padding: 12px 20px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.1rem;
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 3px solid var(--border);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      padding: 50px 0 80px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    @media(min-width: 900px) { .hero-grid { grid-template-columns: 1.1fr 0.9fr; } }
+    
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      margin-bottom: 16px;
+    }
+    .hero h1 span { 
+      color: var(--accent); 
+      text-decoration: underline;
+      text-decoration-style: wavy;
+      text-underline-offset: 6px;
+    }
+    .hero p.lead {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.25rem;
+      margin-bottom: 30px;
+      max-width: 550px;
+    }
+    .microcopy {
+      font-size: 0.95rem;
+      color: var(--fg);
+      opacity: 0.7;
+      margin-top: 12px;
+    }
+
+    /* Video Player */
+    .video-card {
+      background: var(--white);
+      border: 3px solid var(--border);
+      box-shadow: 8px 8px 0px 0px var(--border);
+      padding: 24px;
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      transform: rotate(1deg);
+    }
+    .video-wrapper {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      border: 2px solid var(--border);
+    }
+    .video-wrapper video { width: 100%; height: 100%; object-fit: cover; }
+
+    /* HOW IT WORKS (MECANISMO) */
+    .section-header { text-align: center; margin-bottom: 50px; }
+    .section-header h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px; }
+    
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    @media(min-width: 768px) { .steps-grid { grid-template-columns: repeat(3, 1fr); } }
+    
+    .step-card {
+      background: var(--white);
+      padding: 40px 24px;
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      text-align: center;
+      border: 3px solid var(--border);
+      box-shadow: 6px 6px 0px 0px var(--border);
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+    .step-card:nth-child(1) { transform: rotate(-1deg); }
+    .step-card:nth-child(2) { background: var(--yellow); transform: rotate(1deg); }
+    .step-card:nth-child(3) { transform: rotate(-0.5deg); }
+    
+    .step-card:hover { transform: translateY(-5px); }
+    
+    .step-num {
+      position: absolute;
+      top: -20px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: white;
+      width: 45px; height: 45px; border-radius: 50%;
+      border: 3px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Kalam', cursive; font-size: 1.5rem; font-weight: 700;
+    }
+    .step-icon { font-size: 2.5rem; margin-bottom: 15px; display: block;}
+    .step-card h3 { font-size: 1.6rem; margin-bottom: 10px; }
+
+    /* SOCIAL PROOF */
+    .testimonial-grid {
+      display: grid; grid-template-columns: 1fr; gap: 30px;
+    }
+    @media(min-width: 768px) { .testimonial-grid { grid-template-columns: repeat(3, 1fr); } }
+    
+    .testi-card {
+      background: var(--white);
+      padding: 24px;
+      border: 2px solid var(--border);
+      box-shadow: 5px 5px 0px 0px var(--border);
+      border-radius: 15px 255px 15px 225px / 225px 15px 255px 15px;
+      position: relative;
+    }
+    .testi-card:nth-child(1) { transform: rotate(-1deg); }
+    .testi-card:nth-child(2) { transform: rotate(0.8deg); }
+    .testi-card:nth-child(3) { transform: rotate(-0.5deg); }
+    
+    /* Speech bubble tail */
+    .testi-card::after {
+      content: ''; position: absolute; bottom: -16px; left: 28px;
+      border-left: 16px solid transparent; border-right: 8px solid transparent;
+      border-top: 16px solid var(--border);
+    }
+    .testi-card::before {
+      content: ''; position: absolute; bottom: -12px; left: 29px;
+      border-left: 15px solid transparent; border-right: 7px solid transparent;
+      border-top: 15px solid var(--white); z-index: 1;
+    }
+
+    .testi-author { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+    .testi-author img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--border); object-fit: cover; }
+    .testi-author h4 { font-family: 'Kalam', cursive; font-size: 1.2rem; }
+    .testi-author span { font-size: 0.9rem; color: var(--fg); opacity: 0.6; }
+    .testi-text { font-size: 1.05rem; font-style: italic; }
+
+    /* CAROUSEL */
+    .carousel-wrapper {
+      position: relative; overflow: hidden; width: 100%; margin: 40px 0;
+      mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    }
+    .carousel-track {
+      display: flex; gap: 16px; width: max-content;
+      animation: scroll 25s linear infinite;
+    }
+    .carousel-track img {
+      height: 320px; border-radius: 12px;
+      border: 2px solid var(--border);
+      box-shadow: 4px 4px 0px 0px var(--border);
+      object-fit: cover;
+    }
+    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* BONUSES */
+    .bonus-grid {
+      display: grid; grid-template-columns: 1fr; gap: 24px;
+    }
+    @media(min-width: 900px) { .bonus-grid { grid-template-columns: repeat(2, 1fr); } }
+    
+    .bonus-card {
+      display: flex; flex-direction: column;
+      background: var(--white); 
+      border: 2px solid var(--border);
+      border-radius: 15px 255px 15px 225px / 225px 15px 255px 15px;
+      box-shadow: 4px 4px 0px 0px var(--border);
+      overflow: hidden;
+    }
+    @media(min-width: 500px) { .bonus-card { flex-direction: row; } }
+    
+    .bonus-img { width: 100%; height: 200px; object-fit: cover; border-right: 2px solid var(--border); }
+    @media(min-width: 500px) { .bonus-img { width: 180px; height: 100%; } }
+    
+    .bonus-content { padding: 24px; display: flex; flex-direction: column; justify-content: center; }
+    .bonus-content h4 { font-size: 1.4rem; margin-bottom: 5px; }
+    .bonus-content p { font-size: 1rem; margin-bottom: 10px; }
+    .bonus-price { font-family: 'Kalam', cursive; font-size: 1.1rem; }
+    .bonus-price s { opacity: 0.5; }
+    .bonus-price span { color: #16a34a; font-weight: 700; margin-left: 5px;}
+
+    /* PRICING */
+    .pricing-grid {
+      display: grid; grid-template-columns: 1fr; gap: 40px;
+      max-width: 900px; margin: 0 auto;
+    }
+    @media(min-width: 800px) { .pricing-grid { grid-template-columns: 1fr 1fr; align-items: stretch; } }
+    
+    .price-card {
+      background: var(--bg); 
+      border: 3px solid var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      padding: 40px 30px;
+      box-shadow: 6px 6px 0px 0px var(--border);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .price-card.featured {
+      background: var(--yellow);
+      border-width: 4px;
+      box-shadow: 8px 8px 0px 0px var(--border);
+      transform: rotate(-1deg);
+    }
+    .price-card.featured::after {
+      content: ''; position: absolute; inset: -12px;
+      border: 2px dashed var(--border); opacity: 0.35;
+      border-radius: 270px 20px 250px 20px / 20px 250px 20px 270px;
+      pointer-events: none;
+    }
+    
+    .popular-badge {
+      display: inline-block;
+      background: var(--accent); color: white;
+      border: 2px solid var(--border);
+      padding: 4px 16px; font-family: 'Kalam', cursive;
+      border-radius: 120px 8px 100px 8px / 8px 100px 8px 120px;
+      transform: rotate(-2deg); margin-bottom: 15px; align-self: flex-start;
+    }
+    
+    .price-header h3 { font-size: 1.8rem; margin-bottom: 5px; }
+    .price-amount { font-family: 'Kalam', cursive; font-size: 3rem; color: var(--accent); line-height: 1; margin-bottom: 20px;}
+    .price-amount span { font-size: 1.2rem; color: var(--fg); opacity: 0.6; }
+    
+    .feature-list { list-style: none; margin-bottom: 30px; flex: 1; }
+    .feature-list li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 1.05rem; }
+    .feature-list li .check {
+      background: var(--accent); color: white; width: 22px; height: 22px;
+      border: 2px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; margin-top: 3px;
+    }
+    .feature-list.basic li .check { background: var(--muted); color: var(--fg); }
+
+    /* FAQ */
+    .faq-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 750px; margin: 0 auto; }
+    @media(min-width: 768px) { .faq-grid { grid-template-columns: 1fr 1fr; } }
+    .faq-card {
+      background: var(--white); padding: 24px;
+      border: 2px solid var(--border); box-shadow: 4px 4px 0px 0px var(--border);
+      border-radius: 15px 255px 15px 225px / 225px 15px 255px 15px;
+    }
+    .faq-card:nth-child(odd) { transform: rotate(-0.5deg); }
+    .faq-card:nth-child(even) { transform: rotate(1deg); }
+    .faq-card:nth-child(4) { background: var(--yellow); }
+    
+    .faq-card h4 { font-size: 1.2rem; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px; }
+    .faq-card p { margin-bottom: 0; font-size: 1rem; border-left: 3px solid var(--accent); padding-left: 12px;}
+
+    /* GUARANTEE */
+    .guarantee-wrap {
+      background: var(--fg); color: var(--bg);
+      border-radius: 20px; padding: 50px 30px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      gap: 30px; max-width: 800px; margin: 0 auto;
+    }
+    @media(min-width: 768px) { .guarantee-wrap { flex-direction: row; text-align: left; padding: 50px; } }
+    .guarantee-badge {
+      width: 140px; height: 140px; background: var(--yellow); color: var(--fg);
+      border: 4px solid var(--bg); border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: 'Kalam', cursive; font-weight: 700; line-height: 1; flex-shrink: 0;
+      animation: bounce 3s ease-in-out infinite;
+    }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .guarantee-badge .big { font-size: 2rem; }
+    .guarantee-badge .small { font-size: 1rem; opacity: 0.8; }
+    .guarantee-wrap h2 { font-size: 2.2rem; color: var(--bg); margin-bottom: 10px;}
+    .guarantee-wrap p { color: rgba(253,251,247,0.8); font-size: 1.1rem; margin-bottom: 0;}
+
+    /* FOOTER */
+    footer { background: var(--fg); color: var(--bg); text-align: center; padding: 40px 24px; border-top: 3px solid var(--border); }
+    footer p { opacity: 0.7; margin-bottom: 5px; font-size: 0.9rem; color: var(--bg); }
+
+    /* TOASTS CSS MINIFICADO - ESTILO STICKY NOTE */
+    .toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 15px; pointer-events: none; }
+    @media(max-width: 768px) { .toast-container { bottom: 20px; left: 20px; right: 20px; align-items: flex-start; } }
+    .toast-box { 
+      display: flex; align-items: center; gap: 14px; 
+      background: #FFF9C4; /* Yellow sticky note */
+      border: 1px solid rgba(0,0,0,0.05); 
+      border-radius: 2px 15px 3px 20px / 15px 2px 20px 3px; 
+      box-shadow: 4px 6px 15px rgba(0,0,0,0.15); 
+      padding: 20px 24px; 
+      max-width: 340px; 
+      transform: translateX(-120%) rotate(-2deg); 
+      opacity: 0; 
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease; 
+      pointer-events: auto; 
+      position: relative; 
+    }
+    /* Washi tape at the top */
+    .toast-box::before {
+      content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-3deg);
+      width: 70px; height: 25px; background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(0,0,0,0.05); box-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+    }
+    @media(max-width: 768px) { .toast-box { max-width: 300px; padding: 16px 20px; } }
+    .toast-box.show { transform: translateX(0) rotate(-2deg); opacity: 1; }
+    .toast-box.hide { transform: translateX(-120%) rotate(-3deg); opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease; }
+    .toast-icon-wrap { flex-shrink: 0; font-size: 38px; line-height: 1; margin-right: 4px; filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.1)); }
+    .toast-content { flex: 1; }
+    .toast-name { font-family: 'Kalam', cursive; font-size: 1.35rem; font-weight: 700; color: #2B2D42; line-height: 1.1; margin-bottom: 2px; }
+    .toast-loc { font-family: 'Patrick Hand', cursive; font-size: 0.95rem; color: #666; margin-bottom: 4px; line-height: 1; }
+    .toast-action { font-family: 'Patrick Hand', cursive; font-size: 1.05rem; color: #333; line-height: 1.3; }
+    .toast-action strong { color: #E91E8C; font-weight: 700; }
+    .toast-time { font-family: 'Patrick Hand', cursive; font-size: 0.9rem; color: #888; margin-top: 4px; line-height: 1; }
+    .toast-close { position: absolute; top: 10px; right: 12px; font-size: 18px; color: #aaa; cursor: pointer; line-height: 1; transition: color 0.2s; font-family: sans-serif; }
+    .toast-close:hover { color: #555; }
+  </style>
+</head>
+<body>
+
+  <!-- URGENCY BAR -->
+  <div class="urgency-bar">
+    🔥 Oferta de lançamento encerra em <span id="timer">15:00</span>. Depois disso, o preço dobra.
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="tag">✝️ Kit Papelaria Cristã · Entrega Imediata</div>
+          <h1>+200 arquivos de <span>papelaria cristã</span> prontos pra imprimir e vender</h1>
+          <p class="lead">
+            Não precisa saber editar, criar artes ou ter experiência. Só baixa, imprime na gráfica e vende. Acesso imediato por R$10
+          </p>
+          
+          <a href="#oferta" class="btn btn-primary" style="margin-bottom: 10px;">
+            Quero começar agora →
+          </a>
+          
+          <p class="microcopy">Acesso imediato · Garantia de 7 dias · 100% Seguro</p>
+        </div>
+        
+        <div class="video-card">
+          <div class="video-wrapper">
+            <script src="https://fast.wistia.com/player.js" async></script>
+            <script src="https://fast.wistia.com/embed/lmfu6kdgbw.js" async type="module"></script>
+            <style>
+              wistia-player[media-id='lmfu6kdgbw']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/lmfu6kdgbw/swatch'); display: block; filter: blur(5px); padding-top:177.78%; }
+            </style>
+            <wistia-player media-id="lmfu6kdgbw" aspect="0.5625"></wistia-player>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section style="background: var(--white); border-top: 3px dashed var(--muted); border-bottom: 3px dashed var(--muted);">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag" style="transform: rotate(1deg); margin-bottom: 10px;">✨ Veja como é FÁCIL</div>
+        <h2>Apresentando o Método <span style="color:var(--accent);">Imprime e Vende</span></h2>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <span class="step-icon">📥</span>
+          <h3>Baixe o kit</h3>
+          <p>Acesso imediato após a compra. São +200 Arquivos editáveis e prontos (PDF/PNG).</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <span class="step-icon">🖨️</span>
+          <h3>Imprima</h3>
+          <p>Em casa ou numa gráfica rápida. Custo médio de apenas R$2 a R$5 por unidade.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <span class="step-icon">💰</span>
+          <h3>Venda</h3>
+          <p>Pelo WhatsApp, Instagram ou na igreja. Nossas alunas têm margem de 300% a 500%.</p>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 50px;">
+        <a href="#oferta" class="btn btn-primary">Quero baixar os arquivos agora</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="tag" style="transform: rotate(0); margin-bottom: 10px; background: var(--white);">📣 Resultados de alunas reais</div>
+        <h2>Elas imprimiram em casa e lucraram já no primeiro fim de semana</h2>
+      </div>
+
+      <div class="testimonial-grid">
+        <div class="testi-card">
+          <div class="testi-author">
+            <img src="assets/feedbacks/ana_paula.webp" alt="Ana Paula" loading="lazy">
+            <div>
+              <h4>Ana Paula</h4>
+              <span>Mãe de 2 filhos</span>
+            </div>
+          </div>
+          <p class="testi-text">"Fiz minha primeira venda em 2 dias. Gastei R$8 na gráfica e vendi por R$55. Não acreditei quando o dinheiro caiu no Pix!"</p>
+        </div>
+        <div class="testi-card">
+          <div class="testi-author">
+            <img src="assets/feedbacks/camila.webp" alt="Camila" loading="lazy">
+            <div>
+              <h4>Camila</h4>
+              <span>R$300 no 1º fim de semana</span>
+            </div>
+          </div>
+          <p class="testi-text">"Configurei tudo no celular enquanto meu bebê dormia. Em menos de uma hora mandei pras meninas da igreja e já choveu pedido."</p>
+        </div>
+        <div class="testi-card">
+          <div class="testi-author">
+            <img src="assets/feedbacks/renata.webp" alt="Renata" loading="lazy">
+            <div>
+              <h4>Renata</h4>
+              <span>Dona de casa</span>
+            </div>
+          </div>
+          <p class="testi-text">"Eu tinha vergonha de vender, mas usei as mensagens prontas do kit e a primeira cliente foi minha vizinha, que me indicou pra mais três!"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAROUSEL -->
+  <section style="background: var(--white); border-top: 3px dashed var(--muted); border-bottom: 3px dashed var(--muted); overflow: hidden;">
+    <div class="container" style="text-align: center;">
+      <div class="tag" style="margin-bottom: 15px;">🖼️ Prévia do kit</div>
+      <h2>Veja alguns dos +200 arquivos que você recebe</h2>
+      <p>Agenda cristã · Bloco de notas · Marcador de Bíblia · Planner de oração · Devocional semanal</p>
+    </div>
+    
+    <div class="carousel-wrapper">
+      <div class="carousel-track">
+        <img src="assets/carrossel/1.png" alt="Prévia" loading="lazy">
+        <img src="assets/carrossel/2.png" alt="Prévia" loading="lazy">
+        <img src="assets/carrossel/3.png" alt="Prévia" loading="lazy">
+        <img src="assets/carrossel/4.png" alt="Prévia" loading="lazy">
+        <img src="assets/carrossel/5.png" alt="Prévia" loading="lazy">
+        <img src="assets/carrossel/6.png" alt="Prévia" loading="lazy">
+        <img src="assets/carrossel/7.png" alt="Prévia" loading="lazy">
+        <img src="assets/carrossel/8.png" alt="Prévia" loading="lazy">
+        <img src="assets/carrossel/1.png" alt="Prévia" loading="lazy">
+        <img src="assets/carrossel/2.png" alt="Prévia" loading="lazy">
+        <img src="assets/carrossel/3.png" alt="Prévia" loading="lazy">
+        <img src="assets/carrossel/4.png" alt="Prévia" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- BONUSES -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="tag">🎁 Bônus exclusivos</div>
+        <h2>E ainda leva esses 4 bônus exclusivos — de graça</h2>
+      </div>
+
+      <div class="bonus-grid">
+        <div class="bonus-card">
+          <img src="assets/bonus/bonus-new-1.png" alt="Bônus 1" class="bonus-img" loading="lazy">
+          <div class="bonus-content">
+            <h4>Guia de Montagem Passo a Passo</h4>
+            <p>Como montar cada produto do jeito certo pra encantar a cliente.</p>
+            <div class="bonus-price"><s>R$27</s> <span>Grátis</span></div>
+          </div>
+        </div>
+        <div class="bonus-card">
+          <img src="assets/bonus/bonus-new-2.png" alt="Bônus 2" class="bonus-img" loading="lazy">
+          <div class="bonus-content">
+            <h4>Script de Vendas no WhatsApp</h4>
+            <p>Mensagens prontas pra mandar e fechar a venda na hora.</p>
+            <div class="bonus-price"><s>R$27</s> <span>Grátis</span></div>
+          </div>
+        </div>
+        <div class="bonus-card">
+          <img src="assets/bonus/bonus-new-3.png" alt="Bônus 3" class="bonus-img" loading="lazy">
+          <div class="bonus-content">
+            <h4>Guia de Precificação</h4>
+            <p>Tabela completa de quanto cobrar por cada produto com margem de lucro.</p>
+            <div class="bonus-price"><s>R$27</s> <span>Grátis</span></div>
+          </div>
+        </div>
+        <div class="bonus-card" style="background: var(--yellow);">
+          <img src="assets/bonus/bonus-new-4.png" alt="Bônus 4" class="bonus-img" loading="lazy">
+          <div class="bonus-content">
+            <h4>Lista de Onde Vender</h4>
+            <p>Gráficas baratas, grupos de WhatsApp, feiras e muito mais.</p>
+            <div class="bonus-price"><s>R$27</s> <span>Grátis</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="oferta" style="background: var(--white); border-top: 3px dashed var(--muted);">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag" style="transform: rotate(0); margin-bottom: 10px;">🎁 O que você recebe hoje</div>
+        <h2>Escolha o melhor plano para você</h2>
+      </div>
+
+      <div class="pricing-grid">
+        
+        <!-- Basic -->
+        <div class="price-card">
+          <div class="price-header">
+            <h3>Kit Básico</h3>
+            <div class="price-amount">R$10<span>/ único</span></div>
+          </div>
+          <ul class="feature-list basic">
+            <li><span class="check">✓</span> Kit Impressão básico</li>
+            <li><span class="check">✓</span> Envio no e-mail</li>
+            <li><span class="check">✓</span> +200 arquivos</li>
+          </ul>
+          <a href="#" class="btn btn-block">Quero apenas o básico</a>
+          <div style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--accent); font-family: 'Patrick Hand', cursive;">
+            ATENÇÃO: Temos uma <span style="text-decoration: underline;">oferta ainda mais VANTAJOSA</span> para você! Olhe logo abaixo.<br><br>
+            <span style="font-size: 1.2rem;">↓</span>
+          </div>
+        </div>
+
+        <!-- Premium -->
+        <div class="price-card featured">
+          <div class="popular-badge">⭐ Mais Escolhido</div>
+          <div class="price-header">
+            <h3>Coleção Completa de Papelaria Cristã</h3>
+            <div class="price-amount">R$29,90<span>/ único</span></div>
+          </div>
+          <ul class="feature-list">
+            <li><span class="check">✓</span> <strong>Kit +2.000 Arquivos</strong></li>
+            <li><span class="check">✓</span> +2000 artes e arquivos prontos para imprimir e vender</li>
+            <li><span class="check">✓</span> Agendas e Cadernos — +300 modelos</li>
+            <li><span class="check">✓</span> Blocos de Notas — +250 modelos</li>
+            <li><span class="check">✓</span> Marcadores de Bíblia — +200 modelos</li>
+            <li><span class="check">✓</span> Capas para Bíblia — +150 modelos</li>
+            <li><span class="check">✓</span> Devocionais e Planners — +300 arquivos</li>
+            <li><span class="check">✓</span> E muito mais + bônus exclusivos</li>
+            <li><span class="check">✓</span> 🎁 <strong>Tudo incluso + Licença de Revenda</strong></li>
+          </ul>
+          <a href="https://pay.wiapy.com/Hgzv9bYBNzW" class="btn btn-primary btn-block">
+            QUERO O KIT COMPLETO AGORA
+          </a>
+          <p style="text-align: center; margin-top: 15px; font-size: 0.95rem; margin-bottom: 0;">⏰ Preço de lançamento.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="tag">🤔 Suas dúvidas</div>
+        <h2>Antes que você pense...</h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-card">
+          <h4>❓ "Não sei criar artes"</h4>
+          <p><strong>Não precisa.</strong> Já vem tudo pronto. Você só baixa, imprime e vende. Nenhuma habilidade é exigida.</p>
+        </div>
+        <div class="faq-card">
+          <h4>❓ "Não tenho dinheiro pra investir"</h4>
+          <p><strong>R$10 é menos que um lanche.</strong> Você recupera na primeira venda de apenas uma agendinha.</p>
+        </div>
+        <div class="faq-card">
+          <h4>❓ "Não sei onde vender"</h4>
+          <p><strong>O kit já vem com</strong> sugestão de canais e script de abordagem pronto para você mandar no WhatsApp.</p>
+        </div>
+        <div class="faq-card">
+          <h4>❓ "Tenho filhos e pouco tempo"</h4>
+          <p><strong>É 100% digital.</strong> Você configura em 30 minutos e começa a vender pelo próprio celular enquanto eles dormem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUARANTEE -->
+  <section style="padding-bottom: 120px;">
+    <div class="container">
+      <div class="guarantee-wrap">
+        <div class="guarantee-badge">
+          <span class="big">7</span>
+          <span class="small">Dias</span>
+        </div>
+        <div>
+          <h2>Risco zero. Sério.</h2>
+          <p>Se em 7 dias você não gostar do kit por qualquer motivo, devolvemos 100% do seu dinheiro. Sem perguntas, sem burocracia. Você não tem nada a perder — <strong>e uma renda extra a ganhar.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>© 2024 Papelaria Cristã Digital · Todos os direitos reservados</p>
+      <p>Este produto é digital. Nenhum item físico é enviado. Feito com ✝️ e amor.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS GERAIS -->
+  <script>
+    // Timer de urgência
+    let time = 15 * 60;
+    const timerEl = document.getElementById('timer');
+    setInterval(() => {
+      if(time <= 0) return;
+      time--;
+      let m = Math.floor(time / 60).toString().padStart(2, '0');
+      let s = (time % 60).toString().padStart(2, '0');
+      timerEl.textContent = `${m}:${s}`;
+    }, 1000);
+
+    // Lógica do Player VSL
+    (function(){
+      const wrap = document.getElementById('vplayer-wrap');
+      const video = document.getElementById('vvideo');
+      const overlay = document.getElementById('vplay-overlay');
+      const btn = document.getElementById('vplay-btn');
+      const pBar = document.getElementById('vprogress-bar');
+      const pFill = document.getElementById('vprogress-fill');
+      let hasStarted = false;
+
+      wrap.addEventListener('click', function() {
+        if (!hasStarted) {
+          video.pause();
+          video.currentTime = 0;
+          video.muted = false;
+          video.play();
+          overlay.style.opacity = '0';
+          overlay.style.pointerEvents = 'none';
+          pBar.style.opacity = '1';
+          hasStarted = true;
+        } else {
+          if (video.paused) {
+            video.play();
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
+          } else {
+            video.pause();
+            btn.innerHTML = '<span style="color:#fff; font-size:30px; line-height:1; display:flex; align-items:center; justify-content:center;">▶</span>';
+            btn.style.padding = '20px 25px';
+            btn.style.borderRadius = '50%';
+            btn.style.animation = 'none';
+            overlay.style.opacity = '1';
+            overlay.style.pointerEvents = 'auto';
+          }
+        }
+      });
+
+      video.addEventListener('timeupdate', function() {
+        if (video.duration && hasStarted) {
+          pFill.style.width = (video.currentTime / video.duration * 100) + '%';
+        }
+      });
+      
+      video.addEventListener('ended', function() {
+        if(hasStarted) {
+          hasStarted = false;
+          video.muted = true;
+          video.currentTime = 0;
+          video.play();
+          
+          btn.innerHTML = '<span style="font-family:\'Poppins\', sans-serif; font-size: 1.1rem; font-weight: 800; color: #fff; line-height: 1; display: flex; align-items: center; gap: 6px;">▶ Seu vídeo já começou</span><span style="font-family:\'Poppins\', sans-serif; font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.9); line-height: 1; display: flex; align-items: center; gap: 6px;">🔇 Clique aqui para ouvir</span>';
+          btn.style.padding = '18px 25px';
+          btn.style.borderRadius = '12px';
+          btn.style.animation = 'pulse 2s infinite';
+          
+          overlay.style.opacity = '1';
+          overlay.style.pointerEvents = 'auto';
+          pBar.style.opacity = '0';
+          pFill.style.width = '0%';
+        }
+      });
+    })();
+  </script>
+
+  <!-- LÓGICA DAS NOTIFICAÇÕES (TOASTS) -->
+  <div class="toast-container" id="toastContainer"></div>
+  <script>
+    const vendas = [
+      { nome: 'Ana Paula S.', cidade: 'São Paulo, SP', min: 2 },
+      { nome: 'Mariana Costa', cidade: 'Curitiba, PR', min: 5 },
+      { nome: 'Juliana Ferreira', cidade: 'Fortaleza, CE', min: 8 },
+      { nome: 'Patrícia Lima', cidade: 'Belo Horizonte, MG', min: 11 },
+      { nome: 'Camila Rocha', cidade: 'Recife, PE', min: 3 },
+      { nome: 'Fernanda Alves', cidade: 'Salvador, BA', min: 7 },
+      { nome: 'Larissa Mendes', cidade: 'Goiânia, GO', min: 14 },
+      { nome: 'Raquel Souza', cidade: 'Porto Alegre, RS', min: 1 },
+      { nome: 'Débora Nunes', cidade: 'Manaus, AM', min: 6 }
+    ];
+    let tIdx = 0;
+    const tContainer = document.getElementById('toastContainer');
+    function showToast() {
+      const v = vendas[tIdx % vendas.length];
+      tIdx++;
+      const toast = document.createElement('div');
+      toast.className = 'toast-box';
+      toast.innerHTML = `
+        <div class="toast-icon-wrap">🛍️</div>
+        <div class="toast-content">
+          <div class="toast-name">${v.nome}</div>
+          <div class="toast-loc">${v.cidade}</div>
+          <div class="toast-action">acabou de comprar o <strong>Kit Prosperidade</strong> ✨</div>
+          <div class="toast-time">há ${v.min} minutos</div>
+        </div>
+        <span class="toast-close" onclick="this.parentElement.remove()">✕</span>
+      `;
+      tContainer.appendChild(toast);
+      requestAnimationFrame(() => { requestAnimationFrame(() => toast.classList.add('show')); });
+      setTimeout(() => {
+        toast.classList.replace('show', 'hide');
+        setTimeout(() => toast.remove(), 400);
+      }, 5000);
+    }
+    setTimeout(() => { showToast(); setInterval(showToast, 12000); }, 4000);
+  </script>
+
+  <style>
+    /* Pulse Animation */
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(233, 30, 140, 0.4); }
+      70% { box-shadow: 0 0 0 15px rgba(233, 30, 140, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(233, 30, 140, 0); }
+    }
+
+    /* EXIT MODAL CSS */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 99999;
+      display: flex; align-items: flex-start; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      padding: 20px; overflow-y: auto;
+    }
+    .modal-overlay.active {
+      opacity: 1; pointer-events: auto;
+    }
+    .scrapbook-modal {
+      margin: auto; margin-top: 40px; margin-bottom: 40px;
+      background: var(--bg);
+      background-image: radial-gradient(var(--muted) 1px, transparent 1px);
+      background-size: 24px 24px;
+      border: 4px solid var(--border);
+      box-shadow: 8px 8px 0px var(--border);
+      border-radius: 5px 255px 3px 225px / 255px 5px 225px 3px;
+      padding: 40px 30px 25px;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      transform: translateY(20px) rotate(1deg);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .modal-overlay.active .scrapbook-modal {
+      transform: translateY(0) rotate(0deg);
+    }
+    .modal-tag {
+      display: inline-block; background: var(--yellow); border: 2px solid var(--border);
+      padding: 4px 20px; font-family: 'Kalam', cursive; font-size: 16px;
+      box-shadow: 3px 3px 0px var(--border);
+      border-radius: 120px 8px 100px 8px / 8px 100px 8px 120px;
+      position: absolute; top: -18px; left: 50%; transform: translateX(-50%) rotate(-2deg);
+    }
+    .modal-title {
+      font-size: 1.8rem; line-height: 1.2; margin-bottom: 12px; color: var(--fg);
+    }
+    .wavy-pink {
+      color: var(--accent);
+      text-decoration: underline; text-decoration-style: wavy; text-underline-offset: 5px; text-decoration-thickness: 2px;
+    }
+    .modal-desc {
+      font-size: 1.1rem; opacity: 0.85; margin-bottom: 15px;
+    }
+    .modal-price { margin-bottom: 20px; }
+    .old-price { font-size: 1.1rem; opacity: 0.5; font-family: 'Kalam', cursive; }
+    .new-price { font-size: 4rem; color: var(--accent); font-family: 'Kalam', cursive; line-height: 0.9; margin-top: 5px; }
+    .price-sub { font-size: 0.85rem; opacity: 0.6; margin-top: 5px; font-family: sans-serif; }
+    
+    .modal-features {
+      list-style: none; text-align: left; max-width: 320px; margin: 0 auto 20px;
+    }
+    .modal-features li {
+      font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;
+    }
+    .modal-btn {
+      font-size: 1.3rem; padding: 18px; margin-bottom: 15px;
+    }
+    .modal-close-text {
+      font-size: 0.8rem; color: #888; text-decoration: underline; cursor: pointer; text-transform: uppercase;
+      font-family: sans-serif; margin-top: 5px; transition: color 0.2s;
+    }
+    .modal-close-text:hover { color: var(--border); }
+    
+    @media(max-width: 480px) {
+      .scrapbook-modal { padding: 35px 20px 20px; margin-top: 30px; margin-bottom: 20px; border-width: 3px; box-shadow: 5px 5px 0px var(--border); }
+      .modal-title { font-size: 1.5rem; }
+      .modal-tag { top: -16px; font-size: 14px; padding: 2px 14px; }
+      .new-price { font-size: 3.2rem; }
+      .modal-features li { font-size: 0.95rem; margin-bottom: 4px; }
+      .modal-btn { font-size: 1.15rem; padding: 16px; }
+    }
+  </style>
+
+  <!-- EXIT INTENT MODAL -->
+  <div id="exitModal" class="modal-overlay">
+    <div class="modal-content scrapbook-modal">
+      <div class="modal-tag">⏰ Última chance</div>
+      <h2 class="modal-title">Antes de ir... temos uma oferta que <br><span class="wavy-pink">não volta mais.</span></h2>
+      <p class="modal-desc">Leve a <strong>Coleção Completa</strong> — com todos os bônus e licença de revenda — por apenas:</p>
+      
+      <div class="modal-price">
+        <s class="old-price">R$29,90</s>
+        <div class="new-price">R$15,00</div>
+        <div class="price-sub">pagamento único - acesso imediato</div>
+      </div>
+      
+      <ul class="modal-features">
+        <li>✅ Kit +2.000 Arquivos</li>
+        <li>✅ +2000 artes prontas para imprimir</li>
+        <li>✅ Agendas e Cadernos — +300 modelos</li>
+        <li>✅ Blocos de Notas — +250 modelos</li>
+        <li>✅ Marcadores de Bíblia — +200 modelos</li>
+        <li>✅ Capas para Bíblia — +150 modelos</li>
+        <li>✅ Devocionais e Planners — +300 arquivos</li>
+        <li>✅ E muito mais + bônus exclusivos</li>
+        <li>✅ 🎁 Tudo incluso + Licença de Revenda</li>
+      </ul>
+      
+      <a href="https://pay.wiapy.com/Hgzv9bYBNzW" class="btn btn-primary btn-block modal-btn">
+        🙌 Vou APROVEITAR o desconto!
+      </a>
+      
+      <div class="modal-close-text" onclick="closeExitModal()">Não, vou PERDER O DESCONTO</div>
+    </div>
+  </div>
+
+  <script>
+    // Exit Intent Logic
+    let modalTriggered = false;
+    const exitModal = document.getElementById('exitModal');
+
+    function showExitModal() {
+      if(modalTriggered) return;
+      modalTriggered = true;
+      exitModal.classList.add('active');
+    }
+
+    function closeExitModal() {
+      exitModal.classList.remove('active');
+    }
+
+    // Dispara quando o mouse sai da janela por cima (Desktop)
+    document.addEventListener('mouseleave', (e) => {
+      if (e.clientY <= 0) showExitModal();
+    });
+
+    // Dispara ao clicar no botão "Voltar" no celular (Mobile Back Button Hijack)
+    // Marca o estado original
+    history.replaceState({ page: 'original' }, document.title, location.href);
+    // Cria um estado "guarda" para pegar o Voltar
+    history.pushState({ page: 'guard' }, document.title, location.href);
+
+    window.addEventListener('popstate', function (event) {
+      // Se ele voltou para o estado original (ou seja, tentou sair de fato da página)
+      if (event.state && event.state.page === 'original') {
+        if (!modalTriggered) {
+          showExitModal();
+          // Empurra de novo para não deixar ele sair dessa vez
+          history.pushState({ page: 'guard' }, document.title, location.href);
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

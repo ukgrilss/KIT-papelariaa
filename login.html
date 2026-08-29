@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Acesso — Kit Papelaria</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #fdfbf7;
+      --fg: #2d2d2d;
+      --muted: #e5e0d8;
+      --accent: #e91e8c;
+      --border: #2d2d2d;
+      --yellow: #fff9c4;
+      --white: #ffffff;
+    }
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--muted) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--fg);
+      font-family: 'Patrick Hand', cursive;
+      font-size: 18px;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* BACKGROUND FLOATING DECORATIONS */
+    .bg-deco { position: absolute; font-size: 40px; opacity: 0.2; user-select: none; z-index: -1; }
+    .deco-1 { top: 10%; left: 10%; transform: rotate(-15deg); }
+    .deco-2 { top: 20%; right: 15%; transform: rotate(20deg); font-size: 60px; }
+    .deco-3 { bottom: 15%; left: 15%; transform: rotate(10deg); font-size: 50px; }
+    .deco-4 { bottom: 20%; right: 10%; transform: rotate(-25deg); }
+
+    .login-container {
+      position: relative;
+      width: 100%;
+      max-width: 450px;
+      z-index: 10;
+    }
+
+    .login-box {
+      background: var(--white);
+      border: 4px solid var(--border);
+      box-shadow: 12px 12px 0 var(--border);
+      border-radius: 5px 255px 3px 225px / 255px 5px 225px 3px;
+      padding: 50px 35px 40px;
+      text-align: center;
+      transform: rotate(-1deg);
+      position: relative;
+    }
+
+    /* THE TAPE AT THE TOP */
+    .tape {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      width: 120px;
+      height: 35px;
+      background: rgba(255, 255, 255, 0.4);
+      border: 2px solid rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      backdrop-filter: blur(2px);
+    }
+
+    .logo { 
+      font-family: 'Kalam', cursive; 
+      font-size: 36px; 
+      color: var(--accent); 
+      margin-bottom: 5px; 
+      text-shadow: 2px 2px 0px var(--yellow);
+    }
+    
+    .title { 
+      font-family: 'Kalam', cursive; 
+      font-size: 22px; 
+      margin-bottom: 10px; 
+      color: var(--fg); 
+    }
+    
+    .subtitle {
+      font-size: 16px;
+      opacity: 0.8;
+      margin-bottom: 30px;
+      line-height: 1.4;
+    }
+    
+    .input-group { margin-bottom: 25px; text-align: left; }
+    .input-label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 17px; }
+    .login-input {
+      width: 100%;
+      padding: 16px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 18px;
+      border: 3px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      box-shadow: 4px 4px 0 var(--muted);
+      transition: all 0.2s;
+    }
+    .login-input:focus {
+      border-color: var(--accent);
+      box-shadow: 4px 4px 0 var(--accent);
+      background: #fffbfe;
+    }
+    .login-input::placeholder { opacity: 0.4; }
+    
+    .btn-login {
+      display: block;
+      width: 100%;
+      background: var(--accent);
+      color: var(--white);
+      border: 3px solid var(--border);
+      box-shadow: 6px 6px 0 var(--border);
+      padding: 15px;
+      font-family: 'Kalam', cursive;
+      font-size: 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .btn-login:hover { background: #d81b82; }
+    .btn-login:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 var(--border);
+    }
+    .error-msg {
+      color: #ef4444;
+      font-size: 15px;
+      margin-top: 10px;
+      display: none;
+      background: #fef2f2;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px dashed #ef4444;
+    }
+    
+    .footer-help {
+      margin-top: 40px;
+      font-size: 16px;
+      opacity: 0.7;
+      text-align: center;
+      z-index: 10;
+    }
+    .footer-help a {
+      color: var(--accent);
+      font-weight: bold;
+      text-decoration: underline;
+      text-decoration-style: wavy;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Decorações de fundo -->
+  <div class="bg-deco deco-1">🌸</div>
+  <div class="bg-deco deco-2">📖</div>
+  <div class="bg-deco deco-3">✨</div>
+  <div class="bg-deco deco-4">🖍️</div>
+
+  <div class="login-container">
+    <div class="login-box">
+      <div class="tape"></div>
+      
+      <div class="logo">✨ Papelaria Cristã</div>
+      <h1 class="title">Acessar Meu Kit</h1>
+      <p class="subtitle">Pegue seu bloquinho e sua caneta, seu acesso está te esperando! 💕</p>
+      
+      <div class="input-group">
+        <label class="input-label" for="email">E-mail de compra:</label>
+        <input type="email" id="email" class="login-input" placeholder="seuemail@exemplo.com" required>
+        <div id="error" class="error-msg">⚠️ Por favor, digite um e-mail válido.</div>
+      </div>
+      
+      <button class="btn-login" onclick="fazerLogin()">Entrar agora →</button>
+    </div>
+  </div>
+  
+  <div class="footer-help">
+    Precisa de ajuda? <a href="#">Chame no WhatsApp</a>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const emailParam = urlParams.get('email');
+    if(emailParam && emailParam.includes('@')) {
+      sessionStorage.setItem('kit_email', emailParam.toLowerCase());
+      window.location.href = 'membros.html';
+    }
+
+    function fazerLogin() {
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const errorMsg = document.getElementById('error');
+      
+      if (!email || !email.includes('@')) {
+        errorMsg.style.display = 'block';
+        return;
+      }
+      
+      errorMsg.style.display = 'none';
+      
+      sessionStorage.setItem('kit_email', email);
+      window.location.href = 'membros.html';
+    }
+
+    document.getElementById('email').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        fazerLogin();
+      }
+    });
+  </script>
+
+</body>
+</html>

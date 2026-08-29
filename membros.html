@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Área de Membros — Kit Papelaria</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #fdfbf7;
+      --fg: #2d2d2d;
+      --muted: #e5e0d8;
+      --accent: #e91e8c;
+      --border: #2d2d2d;
+      --yellow: #fff9c4;
+      --white: #ffffff;
+      --green: #d1fae5;
+    }
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--muted) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--fg);
+      font-family: 'Patrick Hand', cursive;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    h1, h2, h3 { font-family: 'Kalam', cursive; font-weight: 700; line-height: 1.2; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* HEADER */
+    .header {
+      background: var(--white);
+      border-bottom: 3px dashed var(--muted);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-content { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: 'Kalam', cursive; font-size: 22px; color: var(--accent); }
+    .btn-sair {
+      background: transparent; border: 2px solid var(--border); padding: 5px 15px;
+      font-family: 'Kalam', cursive; font-size: 16px; border-radius: 12px;
+      cursor: pointer; text-decoration: none; color: var(--fg); transition: background 0.2s;
+    }
+    .btn-sair:hover { background: var(--yellow); }
+
+    /* WELCOME BANNER */
+    .welcome-section { padding: 50px 0 30px; text-align: center; }
+    .welcome-box {
+      background: var(--yellow);
+      border: 3px solid var(--border);
+      box-shadow: 8px 8px 0px var(--border);
+      border-radius: 5px 255px 3px 225px / 255px 5px 225px 3px;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      transform: rotate(-1deg);
+    }
+    .welcome-emoji { font-size: 50px; display: block; margin-bottom: 10px; line-height: 1; }
+    .welcome-title { font-size: 2.5rem; margin-bottom: 10px; color: var(--fg); }
+    .welcome-text { font-size: 1.2rem; opacity: 0.9; }
+    .verse { display: inline-block; margin-top: 20px; font-size: 1rem; border: 2px dashed rgba(0,0,0,0.2); padding: 5px 15px; border-radius: 20px; }
+
+    /* UPSELL */
+    .upsell-section { padding: 0 0 50px; }
+    .upsell-box {
+      background: #fbcfe8;
+      border: 3px dashed var(--accent);
+      border-radius: 10px;
+      padding: 25px;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .upsell-content h3 { font-size: 1.8rem; color: var(--accent); }
+    .upsell-content p { font-size: 1.1rem; }
+    .upsell-btn {
+      background: var(--accent); color: var(--white); text-decoration: none;
+      padding: 12px 25px; border-radius: 8px; font-family: 'Kalam', cursive; font-size: 1.2rem;
+      border: 2px solid var(--border); box-shadow: 3px 3px 0 var(--border); white-space: nowrap;
+    }
+    .upsell-btn:active { box-shadow: 0 0 0 var(--border); transform: translate(3px, 3px); }
+
+    /* GRID SECTION */
+    .modules-section { padding: 20px 0 60px; }
+    .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; position: relative; }
+    .section-title span { background: var(--green); padding: 0 15px; border-radius: 5px; box-shadow: 3px 3px 0 var(--border); border: 2px solid var(--border); display: inline-block; transform: rotate(-1.5deg); }
+    
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px 25px; }
+    
+    .card {
+      background: var(--white);
+      border: 3px solid var(--border);
+      box-shadow: 6px 6px 0 var(--border);
+      border-radius: 8px 15px 12px 10px;
+      padding: 35px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card-icon { font-size: 2.2rem; position: absolute; top: -25px; left: 20px; background: var(--yellow); border: 3px solid var(--border); border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; box-shadow: 2px 2px 0 var(--border); }
+    
+    .card-title { font-size: 1.5rem; margin-bottom: 10px; color: var(--fg); }
+    .card-desc { font-size: 1.05rem; opacity: 0.85; margin-bottom: 20px; flex-grow: 1; }
+    .card-btn {
+      text-align: center; background: transparent; border: 2px solid var(--border);
+      padding: 10px; font-family: 'Kalam', cursive; font-size: 1.2rem; color: var(--fg);
+      text-decoration: none; border-radius: 6px; box-shadow: 3px 3px 0 var(--border);
+      transition: background 0.1s;
+    }
+    .card-btn:hover { background: var(--green); }
+    .card-btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--border); }
+
+    /* PRESENTE */
+    .present-section { padding: 20px 0 80px; }
+    .present-box {
+      background: var(--accent); color: var(--white);
+      border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border);
+      border-radius: 5px 255px 3px 225px / 255px 5px 225px 3px;
+      padding: 40px 20px; text-align: center; max-width: 800px; margin: 0 auto;
+    }
+    .present-box h2 { font-size: 2.5rem; margin-bottom: 15px; color: var(--white); }
+    .present-box p { font-size: 1.2rem; margin-bottom: 20px; }
+    .btn-present { 
+      background: var(--yellow); color: var(--fg); display: inline-block; padding: 12px 30px; font-size: 1.4rem; 
+      text-decoration: none; border: 2px solid var(--border); box-shadow: 4px 4px 0 var(--border);
+      font-family: 'Kalam', cursive; border-radius: 8px;
+    }
+    .btn-present:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--border); }
+
+    @media (max-width: 768px) {
+      .upsell-box { flex-direction: column; text-align: center; }
+      .welcome-title { font-size: 2rem; }
+      .welcome-box, .upsell-box, .present-box { transform: none; box-shadow: 4px 4px 0 var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-content">
+      <div class="logo">✨ Papelaria Cristã</div>
+      <a href="index.html" class="btn-sair">Sair</a>
+    </div>
+  </header>
+
+  <section class="welcome-section">
+    <div class="container">
+      <div class="welcome-box">
+        <span class="welcome-emoji">🎉</span>
+        <h1 class="welcome-title">Bem-vinda ao seu kit, <span id="welcome-name">Amiga</span>!</h1>
+        <p class="welcome-text">Tudo que você precisa pra começar a imprimir e vender está aqui abaixo.</p>
+        <span class="verse">"Tudo posso naquele que me fortalece." — Filipenses 4:13</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="upsell-section">
+    <div class="container">
+      <div class="upsell-box">
+        <div class="upsell-content">
+          <h3>📦 Pack +100 Embalagens</h3>
+          <p>Turbine suas vendas com lindas embalagens cristãs prontas para imprimir.</p>
+        </div>
+        <a href="https://drive.google.com/drive/folders/16PPZJUGWvQwJvnCZM73OgjNavRUxcZYL?usp=sharing" target="_blank" class="upsell-btn">Acessar Pack →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="modules-section">
+    <div class="container">
+      <h2 class="section-title"><span>📦 Seu Kit Completo</span></h2>
+      <div class="grid">
+        
+        <div class="card">
+          <div class="card-icon">📓</div>
+          <h3 class="card-title">Agenda A5 Cristã</h3>
+          <p class="card-desc">Layouts prontos de agenda com versículos e design floral</p>
+          <a href="https://drive.google.com/drive/folders/1DIXfFgO7mEYYNExeDX0WgHnJn0OxF05K?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🙏</div>
+          <h3 class="card-title">Planner de Oração A5</h3>
+          <p class="card-desc">Organize sua vida de oração com planners prontos pra imprimir</p>
+          <a href="https://drive.google.com/drive/folders/1QTOObM5cbYLFsIqT28GpbFmM7fsebYjw?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📖</div>
+          <h3 class="card-title">Marcadores de Bíblia</h3>
+          <p class="card-desc">Marcadores e páginas decorativas cristãs em vários modelos</p>
+          <a href="https://drive.google.com/drive/folders/1CaH2697c_x8rgmUvLOl8cR0qhnlSdFlJ?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📝</div>
+          <h3 class="card-title">Bloco de Notas A6</h3>
+          <p class="card-desc">Modelos de bloco de notas cristão prontos pra imprimir e vender</p>
+          <a href="https://drive.google.com/drive/folders/1T2FmslpyQ1lyai1XKCiK4Q9xLG09QwzY?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">✝️</div>
+          <h3 class="card-title">Bíblias Personalizadas</h3>
+          <p class="card-desc">Capas e layouts personalizados para bíblia prontos pra imprimir e presentear</p>
+          <a href="https://drive.google.com/drive/folders/1nchswGWfJR5oNG5eOm6RxpvuuNDzQEna?usp=sharing" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">💰</div>
+          <h3 class="card-title">Guia de Precificação</h3>
+          <p class="card-desc">Tabela completa de quanto cobrar por cada produto com margem de lucro</p>
+          <a href="https://drive.google.com/drive/folders/1sg8WFMc_ZZdBHW5bjvMdRCTPl8TlQ4-4?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">✂️</div>
+          <h3 class="card-title">Guia de Montagem</h3>
+          <p class="card-desc">Passo a passo de como montar cada produto do jeito certo</p>
+          <a href="https://drive.google.com/drive/folders/1OLbgzL-Rho3vaxZiBxgzjh5pzJQNVbUy?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">🎄</div>
+          <h3 class="card-title">Kit Datas Comemorativas</h3>
+          <p class="card-desc">Artes cristãs prontas pra Páscoa, Natal, Dia das Mães e mais</p>
+          <a href="https://drive.google.com/drive/folders/1FW_RC66mzPK5Tl7l63rTbAUVv0itd1xw?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">📍</div>
+          <h3 class="card-title">Lista de Onde Vender</h3>
+          <p class="card-desc">Gráficas baratas, grupos de WhatsApp, feiras e muito mais</p>
+          <a href="https://drive.google.com/drive/folders/1Tv-R4-55pbTh7YaI78vcL93tptF30yyM?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">💬</div>
+          <h3 class="card-title">Script de Vendas no WhatsApp</h3>
+          <p class="card-desc">Mensagens prontas pra mandar e fechar a venda na hora</p>
+          <a href="https://drive.google.com/drive/folders/11SOlSx_CqmEnlqmoHxjB2YSY1JSeCK1i?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">🎲</div>
+          <h3 class="card-title">+20 Jogos Bíblicos</h3>
+          <p class="card-desc">Jogos cristãos prontos pra imprimir — perfeitos pra eventos e células</p>
+          <a href="https://drive.google.com/drive/folders/1g0A-xsX73a-H6lb9K5I4UF9-WJ3iuLn1?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">⏱️</div>
+          <h3 class="card-title">1 Minuto com Jesus</h3>
+          <p class="card-desc">Devocionais rápidos e inspiradores pra começar o dia com fé</p>
+          <a href="https://drive.google.com/drive/folders/1Ewi2qDIXBph3ZI9J5AKJ9QoVVDUuHDEV?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">📰</div>
+          <h3 class="card-title">Jornal com Jesus</h3>
+          <p class="card-desc">Jornal cristão temático pronto pra imprimir e distribuir</p>
+          <a href="https://drive.google.com/drive/folders/1u8iJnk5EzIh8dpRK4ca-7-o-QuEVG0Tl?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">🎀</div>
+          <h3 class="card-title">+50 Lembrancinhas Cristãs</h3>
+          <p class="card-desc">Lembrancinhas cristãs prontas pra imprimir — perfeitas pra eventos, células e datas especiais</p>
+          <a href="https://drive.google.com/drive/folders/16EQrmZLt2MEfJv4607Y-1ilopKXu6vML?usp=drive_link" target="_blank" class="card-btn">Acessar Arquivos →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="present-section">
+    <div class="container">
+      <div class="present-box">
+        <span class="welcome-emoji" style="font-size: 60px; margin-bottom: 0;">🎁</span>
+        <h2>Você ganhou um presente especial!</h2>
+        <p>Clique abaixo pra descobrir o que preparamos pra você.</p>
+        <a href="https://drive.google.com/drive/folders/1-h0jPwsUO08euYdpBB86RwOWl--5Xw_k?usp=drive_link" target="_blank" class="btn-present">Abrir meu presente →</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const email = sessionStorage.getItem('kit_email');
+      
+      // Se não houver email no navegador, bloqueia o acesso e manda para o login
+      if (!email) {
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      // Pega a primeira parte do email para usar como nome (ex: maria@... -> Maria)
+      const nome = email.split('@')[0];
+      const nomeFormatado = nome.charAt(0).toUpperCase() + nome.slice(1);
+
+      const welcomeEl = document.getElementById('welcome-name');
+      if (welcomeEl) {
+        welcomeEl.textContent = nomeFormatado;
+      }
+    });
+
+    const btnSair = document.querySelector('.btn-sair');
+    if (btnSair) {
+      btnSair.addEventListener('click', function(e) {
+        e.preventDefault();
+        sessionStorage.removeItem('kit_email');
+        window.location.href = 'login.html';
+      });
+    }
+  </script>
+
+</body>
+</html>
