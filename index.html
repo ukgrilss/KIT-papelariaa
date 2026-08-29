@@ -961,10 +961,7 @@
       exitModal.classList.remove('active');
     }
 
-    // Dispara quando o mouse sai da janela por cima (Desktop)
-    document.addEventListener('mouseleave', (e) => {
-      if (e.clientY <= 0) showExitModal();
-    });
+    // (Evento mouseleave removido para evitar falsos positivos no computador)
 
     // Dispara ao clicar no botão "Voltar" no celular (Mobile Back Button Hijack)
     // Marca o estado original
